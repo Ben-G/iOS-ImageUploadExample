@@ -8,9 +8,11 @@
 
 #import "ViewController.h"
 
-@interface ViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate>
+@interface ViewController () <UIImagePickerControllerDelegate, UINavigationControllerDelegate,  NSURLConnectionDelegate, NSURLConnectionDataDelegate>
 
 @property (weak, nonatomic) IBOutlet UIImageView *imageView;
+@property (strong, nonatomic) NSMutableData *downloadData;
+@property (weak, nonatomic) IBOutlet UILabel *downloadProgress;
 
 @end
 
@@ -64,10 +66,34 @@
   
   [request setHTTPBody:body];
   
-  [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue new] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
-    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
-    NSLog(@"%@", responseDictionary);
-  }];
+  self.downloadData = [NSMutableData data];
+  NSURLConnection *imageUploadConnection = [NSURLConnection connectionWithRequest:request delegate:self];
+  [imageUploadConnection start];
+  
+//  [NSURLConnection sendAsynchronousRequest:request queue:[NSOperationQueue new] completionHandler:^(NSURLResponse *response, NSData *data, NSError *connectionError) {
+//    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:nil];
+//    NSLog(@"%@", responseDictionary);
+//  }];
+}
+
+- (void)connection:(NSURLConnection *)connection didSendBodyData:(NSInteger)bytesWritten totalBytesWritten:(NSInteger)totalBytesWritten totalBytesExpectedToWrite:(NSInteger)totalBytesExpectedToWrite {
+  
+  CGFloat percentage = totalBytesWritten / totalBytesExpectedToWrite;
+  NSInteger progress = percentage * 100;
+  self.downloadProgress.text = [NSString stringWithFormat:@"%d %%", progress];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveData:(NSData *)data {
+  [self.downloadData appendData:data];
+}
+
+- (void)connection:(NSURLConnection *)connection didReceiveResponse:(NSURLResponse *)response {
+
+}
+
+- (void)connectionDidFinishLoading:(NSURLConnection *)connection {
+  NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:self.downloadData options:0 error:nil];
+  self.downloadProgress.text = responseDictionary[@"id"];
 }
 
 @end

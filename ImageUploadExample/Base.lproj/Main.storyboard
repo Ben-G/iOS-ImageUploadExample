@@ -3,6 +3,7 @@
     <dependencies>
         <deployment defaultVersion="1792" identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6238"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
@@ -33,21 +34,39 @@
                                     <constraint firstAttribute="height" constant="400" id="UuJ-1G-e6W"/>
                                 </constraints>
                             </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uLb-Sc-syX">
+                                <rect key="frame" x="279" y="6" width="42" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstAttribute="trailingMargin" secondItem="uLb-Sc-syX" secondAttribute="trailing" constant="263" id="3MN-B7-OBZ"/>
+                            <constraint firstAttribute="centerX" secondItem="uLb-Sc-syX" secondAttribute="centerX" id="61o-zp-sE0"/>
+                            <constraint firstItem="uLb-Sc-syX" firstAttribute="leading" secondItem="kh9-bI-dsS" secondAttribute="leadingMargin" constant="263" id="APn-6Y-pgw"/>
                             <constraint firstAttribute="centerX" secondItem="dZN-hF-M9b" secondAttribute="centerX" id="JgZ-VA-3Gf"/>
                             <constraint firstAttribute="centerX" secondItem="X2H-qF-skE" secondAttribute="centerX" id="Ufh-bK-XCW"/>
                             <constraint firstItem="2fi-mo-0CV" firstAttribute="top" secondItem="X2H-qF-skE" secondAttribute="bottom" constant="8" id="c93-lf-oKT"/>
+                            <constraint firstItem="uLb-Sc-syX" firstAttribute="top" secondItem="kh9-bI-dsS" secondAttribute="topMargin" constant="6" id="pmf-gm-oU6"/>
                             <constraint firstAttribute="centerY" secondItem="dZN-hF-M9b" secondAttribute="centerY" id="pzm-8y-9Bb"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="3MN-B7-OBZ"/>
+                                <exclude reference="APn-6Y-pgw"/>
+                            </mask>
+                        </variation>
                     </view>
                     <connections>
+                        <outlet property="downloadProgress" destination="uLb-Sc-syX" id="Bxv-vw-vHa"/>
                         <outlet property="imageView" destination="dZN-hF-M9b" id="r07-uX-cDZ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="121" y="129"/>
         </scene>
     </scenes>
 </document>
